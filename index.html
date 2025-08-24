@@ -10,6 +10,13 @@
 </head>
 
 <body>
+
+  <div class="background-shapes">
+    <div class="shape shape1"></div>
+    <div class="shape shape2"></div>
+    <div class="shape shape3"></div>
+  </div>
+
   <div class="theme-switcher">
     <input type="checkbox" id="theme-toggle">
     <label for="theme-toggle"></label>
@@ -18,25 +25,31 @@
   <div class="qr_box">
     <header>
       <h1>QR Code Generator</h1>
-      <p>Paste a URL or enter text to create a QR code</p>
+      <p>Enter any URL or text to instantly generate your QR code.</p>
     </header>
     <div class="form">
-      <input type="text" placeholder="Enter URL or TEXT">
-      <button class="generate-btn">Generate QR Code</button>
+      <input type="text" placeholder="e.g., https://www.google.com">
+      <button class="generate-btn">
+        <span class="btn-text">Generate QR Code</span>
+        <span class="spinner"></span>
+      </button>
     </div>
     <div class="qr-code">
       <img src="" alt="qr-code">
     </div>
     <div class="download-container">
-        <a href="#" class="download-btn" download>Download QR Code</a>
+        <a href="#" class="download-btn" download>
+            <i class="fa-solid fa-download"></i>
+            <span>Download QR Code</span>
+        </a>
     </div>
   </div>
 
   <footer>
-    <p>&copy; 2023 AdityaChoudhary01. All rights reserved.</p>
+    <p>&copy; 2025 AdityaChoudhary01. All rights reserved.</p>
     <div class="social-links">
-        <a href="https://github.com/AdityaChoudhary01" target="_blank"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/adityachoudhary01/" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="https://github.com/AdityaChoudhary01" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/adityachoudhary01/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
     </div>
   </footer>
 
