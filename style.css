@@ -41,7 +41,7 @@ body {
     background: var(--bg-light);
     color: var(--text-light);
     transition: background 0.5s, color 0.5s;
-    overflow: hidden; /* Hide scrollbars from animated shapes */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 body.dark-theme {
@@ -55,6 +55,7 @@ body.dark-theme {
     border-radius: 50%;
     opacity: 0.15;
     animation: float 20s infinite ease-in-out;
+    z-index: 1;
 }
 .shape1 { width: 200px; height: 200px; top: 10%; left: 10%; background: #2575fc; }
 .shape2 { width: 150px; height: 150px; top: 70%; left: 80%; background: #6a11cb; animation-delay: 5s; }
@@ -72,7 +73,7 @@ body.dark-theme {
 #theme-toggle:checked + label { background-color: #8E54E9; }
 #theme-toggle:checked + label::after { transform: translateX(24px); }
 
-/* Glassmorphism Card */
+/* Main Content Box */
 .qr_box {
     width: 100%;
     max-width: 410px;
@@ -88,6 +89,8 @@ body.dark-theme {
     min-height: 290px;
     animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 5;
+    display: flex;
+    flex-direction: column;
 }
 
 body.dark-theme .qr_box {
@@ -101,7 +104,9 @@ body.dark-theme .qr_box {
     to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.qr_box.active { height: 600px; }
+.qr_box.active {
+    /* Height will be auto-managed by content */
+}
 
 header h1 { font-size: 28px; font-weight: 700; text-align: center; }
 header p { margin-top: 8px; color: inherit; opacity: 0.7; font-size: 16px; text-align: center; }
@@ -170,28 +175,45 @@ body.dark-theme .generate-btn:hover { background: var(--btn-hover-dark); box-sha
 
 .qr-code {
     opacity: 0;
+    max-height: 0; /* Changed for smooth transition */
     display: flex;
-    padding: 20px;
+    padding: 0; /* Changed for smooth transition */
     border-radius: 15px;
     align-items: center;
     pointer-events: none;
     justify-content: center;
-    border: 2px dashed rgba(0,0,0,0.1);
+    border: 2px dashed rgba(0,0,0,0); /* Changed for smooth transition */
     transition: all 0.5s ease;
     transform: scale(0.95);
+    overflow: hidden;
 }
-body.dark-theme .qr-code { border-color: rgba(255,255,255,0.1); }
-.qr_box.active .qr-code { opacity: 1; pointer-events: auto; transform: scale(1); }
+body.dark-theme .qr-code { border-color: rgba(255,255,255,0); } /* Changed for smooth transition */
+.qr_box.active .qr-code {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+    padding: 20px; /* Animate padding in */
+    border-color: rgba(0,0,0,0.1); /* Animate border color in */
+    max-height: 300px; /* Animate height in */
+}
+body.dark-theme .qr_box.active .qr-code { border-color: rgba(255,255,255,0.1); }
 .qr-code img { width: 100%; max-width: 200px; border-radius: 10px; background: white; padding: 10px; }
 
 .download-container {
-    margin-top: 20px;
     opacity: 0;
+    max-height: 0; /* Changed for smooth transition */
     transform: translateY(20px);
-    transition: opacity 0.5s 0.2s ease, transform 0.5s 0.2s ease;
+    transition: opacity 0.5s 0.2s ease, transform 0.5s 0.2s ease, max-height 0.5s ease;
     pointer-events: none;
+    overflow: hidden;
 }
-.qr_box.active .download-container { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.qr_box.active .download-container {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    margin-top: 20px;
+    max-height: 100px; /* Animate height in */
+}
 .download-btn {
     display: flex;
     align-items: center;
@@ -217,7 +239,67 @@ footer { margin-top: 30px; text-align: center; opacity: 0.7; z-index: 5;}
 .social-links a:hover { color: #2575fc; transform: scale(1.2); }
 body.dark-theme .social-links a:hover { color: #8E54E9; }
 
-@media (max-width: 430px) {
-    .qr_box { padding: 20px; }
-    .qr_box.active { height: 580px; }
+/* ------------------- RESPONSIVE DESIGN ------------------- */
+
+/* For Tablets and larger phones */
+@media (max-width: 768px) {
+    .background-shapes .shape {
+        /* Make background shapes smaller */
+        transform: scale(0.7);
+    }
+    .shape1 { top: 5%; left: 5%; }
+    .shape2 { top: 80%; left: 70%; }
+}
+
+/* For Mobile Devices */
+@media (max-width: 480px) {
+    body {
+        padding: 15px;
+    }
+
+    .theme-switcher {
+        top: 15px;
+        right: 15px;
+    }
+
+    .qr_box {
+        padding: 20px;
+        /* Remove fixed min-height to allow content to define size */
+        min-height: 0;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    header p {
+        font-size: 14px;
+    }
+
+    .form input, .generate-btn {
+        height: 50px;
+        font-size: 16px;
+    }
+
+    .download-btn {
+        padding: 12px;
+        font-size: 15px;
+    }
+
+    .qr-code img {
+        max-width: 180px;
+    }
+
+    .background-shapes {
+        /* Hide one shape on small screens to reduce clutter */
+        .shape3 {
+            display: none;
+        }
+        .shape1 { top: 5%; left: -10%; }
+        .shape2 { top: 80%; left: 75%; }
+    }
+
+    footer {
+        font-size: 14px;
+    }
 }
