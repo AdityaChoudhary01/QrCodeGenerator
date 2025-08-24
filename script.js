@@ -10,13 +10,8 @@ let preValue;
 
 // Theme switcher logic
 themeToggle.addEventListener("change", () => {
-    if (themeToggle.checked) {
-        body.classList.add("dark-theme");
-        localStorage.setItem("theme", "dark");
-    } else {
-        body.classList.remove("dark-theme");
-        localStorage.setItem("theme", "light");
-    }
+    body.classList.toggle("dark-theme");
+    localStorage.setItem("theme", body.classList.contains("dark-theme") ? "dark" : "light");
 });
 
 // Load saved theme
@@ -26,22 +21,32 @@ if (savedTheme === "dark") {
     themeToggle.checked = true;
 }
 
+const resetUI = () => {
+    qr_box.classList.remove("active");
+    preValue = "";
+}
+
 // QR Code generation logic
 generateBtn.addEventListener("click", () => {
     let qrValue = qrInput.value.trim();
-    if(!qrValue || preValue === qrValue) return;
+    if(!qrValue || generateBtn.classList.contains("loading")) return;
+
+    // Do not regenerate if the value is the same
+    if (preValue === qrValue) return;
     preValue = qrValue;
-    generateBtn.innerText = "Generating QR Code...";
-    // Use a variable for the image source URL
-    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+
+    // --- Start Loading State ---
+    generateBtn.classList.add("loading");
+    qr_box.classList.remove("active");
+
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=${qrValue}`;
     qrImg.src = qrApiUrl;
 
-    qrImg.addEventListener("load", () => {
+    qrImg.onload = () => {
+        // --- End Loading State ---
+        generateBtn.classList.remove("loading");
         qr_box.classList.add("active");
-        generateBtn.innerText = "Generate QR Code";
 
-        // *** START: FIX FOR DOWNLOAD BUTTON ***
-        // Fetch the image and set the download link
         fetch(qrApiUrl)
             .then(res => res.blob())
             .then(blob => {
@@ -49,16 +54,19 @@ generateBtn.addEventListener("click", () => {
                 downloadBtn.href = objectURL;
                 downloadBtn.setAttribute("download", `qr-code-${qrValue}.png`);
             })
-            .catch(() => {
-                console.error("Failed to fetch QR code for download.");
-            });
-        // *** END: FIX FOR DOWNLOAD BUTTON ***
-    });
+            .catch(() => console.error("Failed to fetch QR code for download."));
+    };
+
+    qrImg.onerror = () => {
+        // --- Handle API Errors ---
+        generateBtn.classList.remove("loading");
+        alert("Failed to generate QR Code. Please check the API or your connection.");
+        resetUI();
+    };
 });
 
 qrInput.addEventListener("keyup", () => {
     if(!qrInput.value.trim()) {
-        qr_box.classList.remove("active");
-        preValue = "";
+        resetUI();
     }
 });
