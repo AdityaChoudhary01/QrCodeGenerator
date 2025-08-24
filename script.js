@@ -1,7 +1,9 @@
 const qr_box = document.querySelector(".qr_box"),
 qrInput = qr_box.querySelector(".form input"),
-generateBtn = qr_box.querySelector(".form button"),
-qrImg = qr_box.querySelector(".qr-code img");
+generateBtn = qr_box.querySelector(".form .generate-btn"),
+qrImg = qr_box.querySelector(".qr-code img"),
+downloadBtn = qr_box.querySelector(".download-btn");
+
 const themeToggle = document.getElementById("theme-toggle");
 const body = document.body;
 let preValue;
@@ -34,6 +36,8 @@ generateBtn.addEventListener("click", () => {
     qrImg.addEventListener("load", () => {
         qr_box.classList.add("active");
         generateBtn.innerText = "Generate QR Code";
+        // Set the href for the download button
+        downloadBtn.href = qrImg.src;
     });
 });
 
