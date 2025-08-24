@@ -8,18 +8,20 @@
 }
 
 :root {
-    --background-light: #f0f2f5;
+    --background-light: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     --text-color-light: #333;
-    --box-bg-light: #fff;
+    --box-bg-light: rgba(255, 255, 255, 0.9);
     --input-border-light: #ccc;
     --button-bg-light: #42a22b;
+    --button-hover-light: #368a22;
     --button-text-light: #fff;
 
-    --background-dark: #1a1a1a;
+    --background-dark: linear-gradient(135deg, #1f2023 0%, #2c3e50 100%);
     --text-color-dark: #f0f2f5;
-    --box-bg-dark: #2a2a2a;
+    --box-bg-dark: rgba(42, 42, 42, 0.9);
     --input-border-dark: #555;
     --button-bg-dark: #4caf50;
+    --button-hover-dark: #45a049;
     --button-text-dark: #fff;
 }
 
@@ -32,7 +34,7 @@ body {
     padding: 20px;
     background: var(--background-light);
     color: var(--text-color-light);
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.5s, color 0.5s;
 }
 
 body.dark-theme {
@@ -87,24 +89,32 @@ body.dark-theme {
     background: var(--box-bg-light);
     border-radius: 15px;
     padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    transition: height 0.3s ease, background 0.3s;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    transition: height 0.4s ease, background 0.3s;
     height: auto;
-    min-height: 265px;
+    min-height: 280px;
+    animation: fadeIn 1s ease-in-out;
 }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 
 body.dark-theme .qr_box {
     background: var(--box-bg-dark);
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
 }
 
 .qr_box.active {
-    height: 530px;
+    height: 580px;
 }
 
 header h1 {
-    font-size: 24px;
-    font-weight: 600;
+    font-size: 26px;
+    font-weight: 700;
     text-align: center;
 }
 
@@ -123,13 +133,13 @@ body.dark-theme header p {
     margin: 25px 0;
 }
 
-.form :where(input, button) {
+.form :where(input, button, a) {
     width: 100%;
     height: 55px;
     border: none;
     outline: none;
     border-radius: 8px;
-    transition: 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .form input {
@@ -140,10 +150,21 @@ body.dark-theme header p {
     color: var(--text-color-light);
 }
 
+.form input:focus {
+    border-color: #42a22b;
+    box-shadow: 0 0 8px rgba(66, 162, 43, 0.3);
+}
+
+
 body.dark-theme .form input {
     border-color: var(--input-border-dark);
     background: var(--box-bg-dark);
     color: var(--text-color-dark);
+}
+
+body.dark-theme .form input:focus {
+    border-color: #4caf50;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
 }
 
 .form input::placeholder {
@@ -154,7 +175,7 @@ body.dark-theme .form input::placeholder {
     color: #777;
 }
 
-.form button {
+.form .generate-btn {
     color: var(--button-text-light);
     background: var(--button-bg-light);
     cursor: pointer;
@@ -163,10 +184,20 @@ body.dark-theme .form input::placeholder {
     font-weight: 500;
 }
 
-body.dark-theme .form button {
+.form .generate-btn:hover {
+    background: var(--button-hover-light);
+    transform: translateY(-2px);
+}
+
+body.dark-theme .form .generate-btn {
     color: var(--button-text-dark);
     background: var(--button-bg-dark);
 }
+
+body.dark-theme .form .generate-btn:hover {
+    background: var(--button-hover-dark);
+}
+
 
 .qr-code {
     opacity: 0;
@@ -194,6 +225,45 @@ body.dark-theme .qr-code {
     border-radius: 5px;
 }
 
+.download-container {
+    margin-top: 15px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+}
+
+.qr_box.active .download-container {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.download-btn {
+    display: block;
+    text-align: center;
+    padding: 15px;
+    background: #42a22b;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.download-btn:hover {
+    background: #368a22;
+}
+
+body.dark-theme .download-btn {
+    background: #4caf50;
+}
+
+body.dark-theme .download-btn:hover {
+    background: #45a049;
+}
+
+
 footer {
     margin-top: 30px;
     text-align: center;
@@ -212,11 +282,12 @@ body.dark-theme footer {
     color: #888;
     margin: 0 10px;
     font-size: 24px;
-    transition: color 0.3s;
+    transition: color 0.3s, transform 0.3s;
 }
 
 .social-links a:hover {
     color: #42a22b;
+    transform: scale(1.1);
 }
 
 body.dark-theme .social-links a {
@@ -232,9 +303,9 @@ body.dark-theme .social-links a:hover {
         padding: 20px;
     }
     .qr_box.active {
-        height: 510px;
+        height: 560px;
     }
-    .form :where(input, button) {
+    .form :where(input, button, a) {
         height: 52px;
     }
     .qr-code img {
