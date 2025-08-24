@@ -3,16 +3,22 @@
 
 <head>
   <meta charset="utf-8">
-  <title>QR-CODE Generator</title>
+  <title>QR Code Generator</title>
   <link rel="stylesheet" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 </head>
 
 <body>
+  <div class="theme-switcher">
+    <input type="checkbox" id="theme-toggle">
+    <label for="theme-toggle"></label>
+  </div>
+
   <div class="qr_box">
     <header>
       <h1>QR Code Generator</h1>
-      <p>Paste URL or Enter TEXT to create QR-Code</p>
+      <p>Paste a URL or enter text to create a QR code</p>
     </header>
     <div class="form">
       <input type="text" placeholder="Enter URL or TEXT">
@@ -22,6 +28,15 @@
       <img src="" alt="qr-code">
     </div>
   </div>
+
+  <footer>
+    <p>&copy; 2023 AdityaChoudhary01. All rights reserved.</p>
+    <div class="social-links">
+        <a href="https://github.com/AdityaChoudhary01" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/adityachoudhary01/" target="_blank"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </footer>
+
   <script src="script.js"></script>
 </body>
 
