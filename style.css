@@ -203,9 +203,10 @@ body.dark-theme .qr_box.active .qr-code { border-color: rgba(255,255,255,0.1); }
     opacity: 0;
     max-height: 0; /* Changed for smooth transition */
     transform: translateY(20px);
-    transition: opacity 0.5s 0.2s ease, transform 0.5s 0.2s ease, max-height 0.5s ease;
+    transition: opacity 0.5s 0.2s ease, transform 0.5s 0.2s ease, max-height 0.5s ease, margin-top 0.5s ease;
     pointer-events: none;
     overflow: hidden;
+    margin-top: 0;
 }
 .qr_box.active .download-container {
     opacity: 1;
@@ -290,14 +291,21 @@ body.dark-theme .social-links a:hover { color: #8E54E9; }
         max-width: 180px;
     }
 
-    .background-shapes {
+    /* --- START: MOBILE FIX --- */
+    .background-shapes .shape3 {
         /* Hide one shape on small screens to reduce clutter */
-        .shape3 {
-            display: none;
-        }
-        .shape1 { top: 5%; left: -10%; }
-        .shape2 { top: 80%; left: 75%; }
+        display: none;
     }
+    .background-shapes .shape1 {
+        /* Keep shape within the viewport */
+        top: 5%;
+        left: -20%; /* Adjusted to be less aggressive */
+    }
+    .background-shapes .shape2 {
+        top: 80%;
+        left: 75%;
+    }
+    /* --- END: MOBILE FIX --- */
 
     footer {
         font-size: 14px;
