@@ -18,22 +18,6 @@ A sleek, modern, and fully responsive QR code generator built with vanilla HTML,
 
 ---
 
-## 📸 Screenshots
-
-<p align="center">
-<strong>Light Mode</strong><br>
-<img src="https://i.imgur.com/your-light-mode-screenshot.png" alt="Light Mode Screenshot" width="600">
-</p>
-
-<p align="center">
-<strong>Dark Mode</strong><br>
-<img src="https://i.imgur.com/your-dark-mode-screenshot.png" alt="Dark Mode Screenshot" width="600">
-</p>
-
-> _Note: Replace the Imgur URLs with actual screenshots from your project._
-
----
-
 ## 🛠️ Getting Started
 
 To get a local copy up and running:
