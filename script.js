@@ -32,12 +32,27 @@ generateBtn.addEventListener("click", () => {
     if(!qrValue || preValue === qrValue) return;
     preValue = qrValue;
     generateBtn.innerText = "Generating QR Code...";
-    qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+    // Use a variable for the image source URL
+    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${qrValue}`;
+    qrImg.src = qrApiUrl;
+
     qrImg.addEventListener("load", () => {
         qr_box.classList.add("active");
         generateBtn.innerText = "Generate QR Code";
-        // Set the href for the download button
-        downloadBtn.href = qrImg.src;
+
+        // *** START: FIX FOR DOWNLOAD BUTTON ***
+        // Fetch the image and set the download link
+        fetch(qrApiUrl)
+            .then(res => res.blob())
+            .then(blob => {
+                const objectURL = URL.createObjectURL(blob);
+                downloadBtn.href = objectURL;
+                downloadBtn.setAttribute("download", `qr-code-${qrValue}.png`);
+            })
+            .catch(() => {
+                console.error("Failed to fetch QR code for download.");
+            });
+        // *** END: FIX FOR DOWNLOAD BUTTON ***
     });
 });
 
